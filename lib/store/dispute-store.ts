@@ -42,7 +42,147 @@ function persistDisputes(disputes: Record<string, DisputeScenario>) {
   }
 }
 
-export const DisputeStore = {
+export const DisputeStore = { 
+  createDispute(data: {
+    role: 'TENANT' | 'LANDLORD';
+
+    myName: string;
+    myEmail: string;
+    myPhone: string;
+
+    otherName: string;
+    otherEmail: string;
+    otherPhone: string;
+
+    propertyAddress: string;
+    city: string;
+
+    monthlyRent: number;
+    securityDeposit: number;
+    withheldAmount: number;
+
+    tenancyStartDate: string;
+    tenancyEndDate: string;
+    moveOutDate: string;
+
+    disputeDescription: string;
+    claimedAmount: number;
+  }): DisputeScenario {
+    const map = getInitialDisputes();
+
+    const id = `DISP-${Date.now()}`;
+
+    const tenant =
+      data.role === 'TENANT'
+        ? {
+            name: data.myName,
+            email: data.myEmail,
+            phone: data.myPhone,
+          }
+        : {
+            name: data.otherName,
+            email: data.otherEmail,
+            phone: data.otherPhone,
+          };
+
+    const landlord =
+      data.role === 'LANDLORD'
+        ? {
+            name: data.myName,
+            email: data.myEmail,
+            phone: data.myPhone,
+          }
+        : {
+            name: data.otherName,
+            email: data.otherEmail,
+            phone: data.otherPhone,
+          };
+
+    const claimId = `CLAIM-${Date.now()}`;
+
+    const newDispute: DisputeScenario = {
+      id,
+
+      scenarioName: `User Dispute - ${data.city}`,
+
+      scenarioDescription:
+        data.disputeDescription,
+
+      badge: 'User Created',
+
+      propertyAddress:
+        data.propertyAddress,
+
+      city: data.city,
+
+      monthlyRent:
+        data.monthlyRent,
+
+      securityDeposit:
+        data.securityDeposit,
+
+      depositReturned:
+        Math.max(
+          0,
+          data.securityDeposit -
+            data.withheldAmount
+        ),
+
+      withheldAmount:
+        data.withheldAmount,
+
+      tenancyStartDate:
+        data.tenancyStartDate,
+
+      tenancyEndDate:
+        data.tenancyEndDate,
+
+      moveOutDate:
+        data.moveOutDate,
+
+      status: 'NEGOTIATION',
+
+      currentRound: 0,
+
+      tenant,
+
+      landlord,
+
+      claims: [
+        {
+          id: claimId,
+          category: 'OTHER',
+          description:
+            data.disputeDescription,
+          claimedAmount:
+            data.claimedAmount,
+          invoiceAmount:
+            data.claimedAmount,
+          conditionTag:
+            'GOOD',
+          hasOfficialInvoice:
+            false,
+          tenantResponse:
+            data.role === 'TENANT'
+              ? data.disputeDescription
+              : '',
+        },
+      ],
+
+      evidence: [],
+
+      negotiationHistory: [],
+
+      consents: {},
+    };
+
+    map[id] = newDispute;
+
+    persistDisputes(map);
+
+    return newDispute;
+  },
+
   getAll(): DisputeScenario[] {
     const map = getInitialDisputes();
     return Object.values(map);
