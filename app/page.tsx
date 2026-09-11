@@ -20,17 +20,15 @@ import { DisputeStore } from '@/lib/store/dispute-store';
 export default function LandingPage() {
   const router = useRouter();
 
-  const handleStartAsTenant = () => {
-    DisputeStore.setActiveRole('TENANT');
-    const dispute = DisputeStore.resetScenario('scenario-1');
-    router.push(`/dispute/${dispute.id}/tenant`);
-  };
+const handleStartAsTenant = () => {
+  DisputeStore.setActiveRole('TENANT');
+  router.push('/create-dispute');
+};
 
-  const handleStartAsLandlord = () => {
-    DisputeStore.setActiveRole('LANDLORD');
-    const dispute = DisputeStore.resetScenario('scenario-1');
-    router.push(`/dispute/${dispute.id}/landlord`);
-  };
+const handleStartAsLandlord = () => {
+  DisputeStore.setActiveRole('LANDLORD');
+  router.push('/create-dispute');
+};
 
   const handleRun5MinDemo = () => {
     DisputeStore.setActiveRole('TENANT');
