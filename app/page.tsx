@@ -11,8 +11,7 @@ import {
   FileCheck, 
   TrendingDown, 
   CheckCircle2, 
-  Users, 
-  Building2,
+ 
   FileText
 } from 'lucide-react';
 import { DisputeStore } from '@/lib/store/dispute-store';
@@ -20,15 +19,6 @@ import { DisputeStore } from '@/lib/store/dispute-store';
 export default function LandingPage() {
   const router = useRouter();
 
-const handleStartAsTenant = () => {
-  DisputeStore.setActiveRole('TENANT');
-  router.push('/create-dispute');
-};
-
-const handleStartAsLandlord = () => {
-  DisputeStore.setActiveRole('LANDLORD');
-  router.push('/create-dispute');
-};
 
   const handleRun5MinDemo = () => {
     DisputeStore.setActiveRole('TENANT');
@@ -57,43 +47,38 @@ const handleStartAsLandlord = () => {
           &ldquo;Resolve rental deposit disputes before they become court disputes.&rdquo;
         </p>
 
-        {/* Hero CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 max-w-md mx-auto">
-          <button
-            onClick={handleStartAsTenant}
-            className="w-full sm:w-auto px-6 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg hover:shadow-emerald-500/20 flex items-center justify-center gap-2 transition active:scale-95"
-          >
-            <Users className="w-4 h-4" /> START AS TENANT
-          </button>
+       <div className="flex justify-center mb-16">
+  <button
+    onClick={() => router.push('/create-dispute')}
+    className="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg hover:shadow-emerald-500/20 flex items-center justify-center gap-2 transition active:scale-95"
+  >
+    ENTER THE WAR ROOM
+    <ArrowRight className="w-5 h-5" />
+  </button>
+</div>
 
-          <button
-            onClick={handleStartAsLandlord}
-            className="w-full sm:w-auto px-6 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-lg hover:shadow-indigo-500/20 flex items-center justify-center gap-2 transition active:scale-95"
-          >
-            <Building2 className="w-4 h-4" /> START AS LANDLORD
-          </button>
-        </div>
-
-        {/* Highlight Banner: 5-Minute Hackathon Demo */}
+        {/* Interactive Demonstration */}
         <div className="max-w-xl mx-auto bg-slate-800/80 border border-slate-700 rounded-2xl p-5 shadow-2xl backdrop-blur-sm">
           <div className="flex items-center justify-between gap-4">
             <div className="text-left">
               <span className="text-amber-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5" /> For Hackathon Judges
-              </span>
-              <h4 className="text-base font-bold text-white mt-0.5">
-                Experience Complete Dispute in &lt; 5 Minutes
-              </h4>
-              <p className="text-xs text-slate-400">
-                Pre-loads Whitefield 2BHK case with painting, geyser depreciation & consensus.
-              </p>
+  <Sparkles className="w-3.5 h-3.5" /> Interactive Demonstration
+</span>
+
+<h4 className="text-base font-bold text-white mt-0.5">
+  Explore the Complete Dispute Lifecycle
+</h4>
+
+<p className="text-xs text-slate-400">
+  Experience a pre-configured Whitefield 2BHK case from intake through settlement.
+</p>
             </div>
 
             <button
               onClick={handleRun5MinDemo}
               className="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-extrabold rounded-xl text-xs sm:text-sm shrink-0 shadow-lg flex items-center gap-1.5 transition active:scale-95"
             >
-              <span>🚀</span> LOAD DEMO
+             <span>→</span> VIEW DEMONSTRATION
             </button>
           </div>
         </div>
